@@ -7,6 +7,11 @@ A community-driven, client-side web application designed to mirror the utility o
 ## Overview
 The D3FEND Navigator allows security professionals and researchers to dynamically explore, manipulate, and annotate the D3FEND matrix. It provides a visual canvas for mapping defensive countermeasures, scoring techniques, and exporting data for reporting or presentations. The application is entirely client-side, meaning no data is ever sent to a backend server.
 
+<img width="1919" height="911" alt="d3fend-navigator" src="https://github.com/user-attachments/assets/ee0fe1c6-ac5b-45f2-962e-d3eb90452f7c" />
+
+<img width="1919" height="403" alt="d3fend-navigator_2" src="https://github.com/user-attachments/assets/7fd57b4b-62bb-405a-b366-c0443f2d985b" />
+
+
 ## Key Features
 * **Multi-Layer Management:** Create, rename, and toggle between multiple active matrix layers.
 * **Technique Scoring & Coloring:** Apply numeric scores to techniques with automatic gradient color mapping.
