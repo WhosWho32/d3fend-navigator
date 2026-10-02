@@ -809,102 +809,124 @@ export default function App() {
     <div className="flex flex-col h-screen w-screen bg-[#1c2128] text-[#adbac7] font-sans overflow-hidden">
       
       {/* TOP TAB BAR */}
-      <div className="flex items-center justify-between bg-[#151b23] border-b border-[#373e47] px-2 h-14 text-xs">
-        <div className="flex items-center h-full overflow-x-auto">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between p-3 bg-[#22272e] border-b border-[#373e47] gap-3 lg:gap-0">
+        
+        {/* Left Side: Branding & Tabs (Strictly bounded to prevent overlap) */}
+        <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6 flex-1 min-w-0">
           
-          {/* BRANDING LOGO - Simple Text Version */}
-          <div className="flex flex-col pl-2 pr-4 select-none justify-center h-full">
-            <div className="flex items-baseline gap-2">
-              <span className="font-extrabold text-white text-lg tracking-wide">
-                MITRE <span className="text-[#388bfd]">D3FEND™</span>
-              </span>
-              <span className="text-[#768390] text-lg font-light">Navigator</span>
-              <span className="bg-[#2d333b] text-[#adbac7] px-1.5 py-0.5 rounded text-[10px] font-mono ml-1 border border-[#444c56]">v1.1.0</span>
+          {/* Branding */}
+          <div className="flex flex-col shrink-0">
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold text-white tracking-tight">
+                MITRE <span className="text-[#388bfd]">D3FEND</span>™ Navigator
+              </h1>
+              <span className="bg-[#2d333b] text-[#adbac7] px-1.5 py-0.5 rounded text-[10px] font-mono ml-2 border border-[#444c56]">v1.2.0</span>
             </div>
-            <span className="text-[#768390] text-[10px] mt-0.5 tracking-wide">
-              A knowledge graph of cybersecurity countermeasures
-            </span>
+            <span className="text-[#768390] text-xs mt-0.5 hidden lg:block">A knowledge graph of cybersecurity countermeasures</span>
           </div>
 
-          <div className="h-8 w-px bg-[#373e47] mx-2"></div>
-
-          {/* LAYER TABS */}
-          {layers.map(layer => (
-            <div
-              key={layer.id} 
-              onClick={() => setActiveLayerId(layer.id)}
-              className={`flex items-center gap-2 border-x border-[#373e47] px-3 h-10 self-end cursor-pointer transition-colors max-w-[200px] truncate ${
-                activeLayerId === layer.id 
-                  ? 'bg-[#22272e] border-t-2 border-t-[#388bfd] font-semibold text-white' 
-                  : 'hover:bg-[#21262d]'
-              }`}
-            >
-              <span className="truncate">{layer.name}</span>
-              {layers.length > 1 && (
-                <X size={12} className="hover:text-red-400 min-w-[12px]" onClick={(e) => removeLayer(layer.id, e)} />
-              )}
-            </div>
-          ))}
-          <button onClick={addLayer} className="p-1.5 hover:bg-[#30363d] rounded text-[#768390] hover:text-white ml-2 self-end mb-1.5"><Plus size={14} /></button>
+          {/* Layer Tabs (Scrolls cleanly if there are too many) */}
+          <div className="flex items-center gap-1 overflow-x-auto min-w-0 hide-scrollbar pb-1 lg:pb-0">
+            {layers.map((layer) => (
+              <button
+                key={layer.id}
+                onClick={() => setActiveLayerId(layer.id)}
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium border-t-2 transition-colors shrink-0 ${
+                  activeLayerId === layer.id
+                    ? 'border-[#58a6ff] bg-[#22272e] text-white'
+                    : 'border-transparent bg-[#1c2128] text-[#768390] hover:text-[#adbac7] hover:bg-[#2d333b]'
+                }`}
+              >
+                {layer.name}
+                {layers.length > 1 && (
+                  <X 
+                    size={14} 
+                    className="hover:text-red-400 ml-1 opacity-50 hover:opacity-100" 
+                    onClick={(e) => removeLayer(layer.id, e)}
+                  />
+                )}
+              </button>
+            ))}
+            <button onClick={addLayer} className="p-1.5 text-[#768390] hover:text-white hover:bg-[#2d333b] rounded shrink-0">
+              <Plus size={16} />
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2 pl-4">
-          <input type="file" ref={fileInputRef} accept=".json" className="hidden" onChange={importJSON} />
-          <button onClick={() => fileInputRef.current.click()} className="flex items-center gap-1 px-2.5 py-1 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors"><Upload size={12} /> Import</button>
-          <button onClick={() => exportImage('svg')} className="flex items-center gap-1 px-2.5 py-1 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors"><ImageIcon size={12} /> SVG</button>
-          <button onClick={exportCSV} className="flex items-center gap-1 px-2.5 py-1 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors"><Download size={12} /> CSV</button>
-          <button onClick={exportJSON} className="flex items-center gap-1 px-2.5 py-1 bg-[#1f6feb] hover:bg-[#388bfd] text-white rounded font-semibold transition-colors"><Download size={12} /> JSON</button>
-          
-          <div className="h-6 w-px bg-[#373e47] mx-1"></div>
-          
-          <button onClick={() => setIsChangelogOpen(true)} className="flex items-center gap-1 px-2.5 py-1 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-[#adbac7] hover:text-white"><FileText size={12} /> Changelog</button>
-          <HelpCircle 
-            size={16} 
-            className="text-[#768390] hover:text-white ml-1 cursor-pointer transition-colors" 
-            onClick={() => setIsHelpOpen(true)} 
-          />
+        {/* Right Side: Action Buttons (Locked width) */}
+        <div className="flex items-center gap-2 shrink-0 overflow-x-auto hide-scrollbar pb-1 lg:pb-0 pl-0 lg:pl-4">
+          <button onClick={() => fileInputRef.current.click()} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><Upload size={14} /> Import</button>
+          <button onClick={() => exportImage('svg')} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><ImageIcon size={14} /> SVG</button>
+          <button onClick={() => exportImage('png')} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><ImageIcon size={14} /> PNG</button>
+          <button onClick={exportCSV} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><Download size={14} /> CSV</button>
+          <button onClick={exportJSON} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1f6feb] hover:bg-[#388bfd] text-white rounded font-semibold transition-colors text-sm whitespace-nowrap"><Download size={14} /> JSON</button>
+          <button onClick={() => setIsChangelogOpen(true)} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap ml-2"><FileText size={14} /> Changelog</button>
+          <button onClick={() => setIsHelpOpen(true)} className="p-1.5 text-[#768390] hover:text-white transition-colors ml-1"><HelpCircle size={18} /></button>
         </div>
       </div>
 
-      {/* ACTION BAR */}
-      <div className="flex items-center justify-between bg-[#22272e] border-b border-[#373e47] px-4 py-1.5 text-xs">
-        <div className="flex items-center gap-1">
-          {['selection', 'layer', 'technique'].map(menu => (
-            <button 
-              key={menu}
-              onClick={() => updateActiveLayer({ activeMenu: activeLayer.activeMenu === menu ? null : menu })}
-              className={`px-3 py-1 rounded font-medium capitalize ${activeLayer.activeMenu === menu ? 'bg-[#316dca] text-white' : 'hover:bg-[#2d333b]'}`}
-            >
-              {menu} Controls {menu === 'technique' ? `(${activeLayer.selectedTechs.size})` : ''}
-            </button>
-          ))}
+      {/* SECONDARY CONTROL BAR */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between px-4 py-2 bg-[#22272e] border-b border-[#373e47] gap-3 lg:gap-0">
+        <div className="flex items-center gap-5 lg:gap-6 text-sm font-medium text-[#adbac7] overflow-x-auto hide-scrollbar pb-1 lg:pb-0">
+          <span 
+            onClick={() => updateActiveLayer({ activeMenu: activeLayer.activeMenu === 'selection' ? null : 'selection' })}
+            className={`cursor-pointer transition-colors whitespace-nowrap ${activeLayer.activeMenu === 'selection' ? 'text-white border-b-2 border-[#58a6ff] pb-1' : 'hover:text-white'}`}
+          >
+            Selection Controls
+          </span>
+          <span 
+            onClick={() => updateActiveLayer({ activeMenu: activeLayer.activeMenu === 'layer' ? null : 'layer' })}
+            className={`cursor-pointer transition-colors whitespace-nowrap ${activeLayer.activeMenu === 'layer' ? 'text-white border-b-2 border-[#58a6ff] pb-1' : 'hover:text-white'}`}
+          >
+            Layer Controls
+          </span>
+          <span 
+            onClick={() => updateActiveLayer({ activeMenu: activeLayer.activeMenu === 'technique' ? null : 'technique' })}
+            className={`cursor-pointer transition-colors whitespace-nowrap ${activeLayer.activeMenu === 'technique' ? 'text-white border-b-2 border-[#58a6ff] pb-1' : 'hover:text-white'}`}
+          >
+            Technique Controls ({activeLayer.selectedTechs.size})
+          </span>
         </div>
-        <div className="flex items-center gap-3">
+        
+        <div className="flex items-center gap-3 w-full lg:w-auto shrink-0">
           {searchQuery && (
-            <span className={`text-[10px] font-semibold ${matchCount > 0 ? 'text-yellow-400' : 'text-red-400'}`}>
+            <span className="text-xs text-yellow-400 font-medium whitespace-nowrap hidden lg:inline-block">
               {matchCount} {matchCount === 1 ? 'match' : 'matches'}
             </span>
           )}
-          <div className="relative flex items-center">
-            <Search size={13} className="absolute left-2 text-[#768390]" />
-            <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-[#1c2128] border border-[#373e47] rounded pl-7 pr-2 py-0.5 text-xs text-white focus:border-blue-500 w-48" />
+          <div className="relative w-full lg:w-auto">
+            <Search size={14} className="absolute left-2.5 top-2 text-[#768390]" />
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full lg:w-64 bg-[#0d1117] border border-[#373e47] rounded py-1 pl-8 pr-8 text-sm focus:outline-none focus:border-[#58a6ff] focus:ring-1 focus:ring-[#58a6ff] text-white placeholder-[#768390] transition-all"
+            />
+            {searchQuery && (
+              <X 
+                size={14} 
+                className="absolute right-2.5 top-2 text-[#768390] hover:text-white cursor-pointer" 
+                onClick={() => setSearchQuery('')}
+              />
+            )}
           </div>
         </div>
       </div>
 
       {/* CONTROLS SUB-PANEL */}
       {activeLayer.activeMenu && (
-        <div className="bg-[#1c2128] border-b border-[#373e47] p-3 px-6 text-xs flex items-center gap-8">
+        <div className="bg-[#1c2128] border-b border-[#373e47] p-3 px-4 lg:px-6 text-xs flex items-center overflow-x-auto hide-scrollbar">
           
           {activeLayer.activeMenu === 'selection' && (
-            <div className="flex gap-3">
+            <div className="flex gap-3 min-w-max">
               <button onClick={() => updateActiveLayer({ selectedTechs: new Set(allTechniques.map(t => t.id)) })} className="px-2 py-1 bg-[#2d333b] hover:bg-[#373e47] text-white rounded">Select All</button>
               <button onClick={() => updateActiveLayer({ selectedTechs: new Set() })} className="px-2 py-1 bg-[#2d333b] hover:bg-[#373e47] text-white rounded">Deselect All</button>
             </div>
           )}
 
           {activeLayer.activeMenu === 'layer' && (
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 min-w-max">
               <div className="flex items-center gap-2">
                 <input 
                   type="text" 
@@ -956,7 +978,7 @@ export default function App() {
           )}
 
           {activeLayer.activeMenu === 'technique' && (
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-8 min-w-max">
               <div className="flex items-center gap-2">
                 <span className="text-white">Score:</span>
                 <input 
@@ -1113,6 +1135,20 @@ export default function App() {
             </div>
             
             <div className="p-5 overflow-y-auto text-sm text-[#adbac7] space-y-6">
+
+            {/* --- v1.2.0 --- */}
+              <section>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <h3 className="font-bold text-white text-base">v1.2.0</h3>
+                  <span className="text-xs text-[#768390]">Mobile Layout & Export Update</span>
+                </div>
+                <ul className="list-disc pl-5 space-y-1.5">
+                  <li>Added a dedicated PNG export button for native mobile viewing and easier sharing.</li>
+                  <li>Implemented full mobile responsiveness with horizontally scrollable tabs, action buttons, and control menus.</li>
+                  <li>Preserved the strict desktop layout to ensure complete visual consistency on larger screens.</li>
+                  <li>Fixed an issue where secondary control panels and color pickers were being clipped on smaller devices.</li>
+                </ul>
+              </section>
               
               {/* --- v1.1.0 --- */}
               <section>
