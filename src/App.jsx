@@ -1249,9 +1249,17 @@ export default function App() {
               <section>
                 <h3 className="font-semibold text-white mb-1.5">Annotations & Comments</h3>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Right-click</strong> any technique cell to open the Metadata menu.</li>
-                  <li>Here you can add notes, external URLs, or Jira ticket references.</li>
+                  <li><strong>Right-click</strong> (or <strong>long-press</strong> on mobile) any technique cell to open the Metadata menu.</li>
+                  <li>Here you can add notes, external URLs, or ticket references.</li>
                   <li>Techniques with active comments will display a small yellow triangle in the top right corner.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="font-semibold text-white mb-1.5">Navigation & Search</h3>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><strong>Search:</strong> Find techniques by ID or name. Matches highlight in yellow, and even collapsed columns will glow if they hide a match.</li>
+                  <li><strong>Collapsible Columns:</strong> Click on any tactic header (e.g., MODEL, HARDEN) to collapse the column and save screen space. Hidden scored techniques are displayed as a color-coded mini-map!</li>
                 </ul>
               </section>
 
@@ -1259,9 +1267,9 @@ export default function App() {
                 <h3 className="font-semibold text-white mb-1.5">Saving & Exporting</h3>
                 <ul className="list-disc pl-5 space-y-1">
                   <li><strong>Tabs:</strong> Use the `+` button in the top left to create multiple independent matrix layers.</li>
-                  <li><strong>Export JSON:</strong> Saves your exact layer state (scores, colors, comments) locally.</li>
-                  <li><strong>Import:</strong> Upload a previously saved JSON file to instantly restore your matrix.</li>
-                  <li><strong>SVG/PNG:</strong> Takes a clean, high-resolution snapshot of your current matrix for presentations or reports (selection borders are automatically hidden).</li>
+                  <li><strong>Import / Export JSON:</strong> Save your exact layer state (scores, colors, comments) locally and restore it later.</li>
+                  <li><strong>SVG & PNG:</strong> Export high-resolution snapshots of your matrix. Collapsed columns will automatically expand for the picture!</li>
+                  <li><strong>CSV:</strong> Generate a spreadsheet-ready report of all your currently scored and annotated techniques.</li>
                 </ul>
               </section>
             </div>
