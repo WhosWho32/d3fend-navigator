@@ -750,14 +750,31 @@ export default function App() {
         }
 
         const newId = `layer-${Date.now()}`;
-        setLayers(prev => [...prev, {
-          id: newId,
-          name: json.name || "Imported Layer",
-          techniqueData: importedData,
-          selectedTechs: new Set(),
-          gradientConfig: json.gradient || { min: 0, max: 100, lowColor: "#ff4444", highColor: "#44ff44" },
-          activeMenu: null
-        }]);
+        
+        setLayers(prev => {
+          let baseName = json.name || "Imported Layer";
+          let newName = baseName;
+          
+          // Check for duplicate names and append a counter if needed
+          if (prev.some(l => l.name.toLowerCase() === newName.toLowerCase())) {
+            let counter = 1;
+            newName = `${baseName} (${counter})`;
+            while (prev.some(l => l.name.toLowerCase() === newName.toLowerCase())) {
+              counter++;
+              newName = `${baseName} (${counter})`;
+            }
+          }
+
+          return [...prev, {
+            id: newId,
+            name: newName,
+            techniqueData: importedData,
+            selectedTechs: new Set(),
+            gradientConfig: json.gradient || { min: 0, max: 100, lowColor: "#ff4444", highColor: "#44ff44" },
+            activeMenu: null
+          }];
+        });
+        
         setActiveLayerId(newId);
       } catch (err) {
         alert("Failed to parse JSON layer file.");
@@ -808,6 +825,15 @@ export default function App() {
   return (
     <div className="flex flex-col h-screen w-screen bg-[#1c2128] text-[#adbac7] font-sans overflow-hidden">
       
+      {/* HIDDEN FILE INPUT FOR IMPORT */}
+      <input 
+        type="file" 
+        accept=".json"
+        ref={fileInputRef} 
+        style={{ display: 'none' }} 
+        onChange={importJSON} 
+      />
+
       {/* TOP TAB BAR */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between p-3 bg-[#22272e] border-b border-[#373e47] gap-3 lg:gap-0">
         
