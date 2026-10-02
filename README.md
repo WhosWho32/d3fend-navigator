@@ -13,11 +13,15 @@ The D3FEND Navigator allows security professionals and researchers to dynamicall
 
 
 ## Key Features
-* **Multi-Layer Management:** Create, rename, and toggle between multiple active matrix layers.
-* **Technique Scoring & Coloring:** Apply numeric scores to techniques with automatic gradient color mapping.
-* **Data Portability:** Export configurations as JSON files for local storage and import them later to resume work.
-* **High-Resolution Exports:** Export the active matrix as an SVG or PNG for use in slide decks and reports.
-* **Advanced Search:** Instantly locate techniques by name or their official D3FEND ID (e.g., `D3-AVE`).
+* **Interactive Tactical Matrix:** Full support for the D3FEND ontology (Model, Harden, Detect, Isolate, Deceive, Evict, Restore) in a responsive grid.
+* **Multi-Layer Management:** Create and manage multiple defense layers simultaneously using a tabbed interface (e.g., "Current State" vs. "Target State").
+* **Scoring & Annotations:** Score individual techniques (0-100) to automatically apply gradient color coding. Right-click any cell to add custom metadata, comments, and URL references.
+* **Smart Search:** Search by technique ID or name. Matched techniques are highlighted, and even collapsed columns will glow to indicate hidden matches.
+* **Collapsible Tactic Columns:** Optimize screen real estate on smaller displays by collapsing full tactic columns into sleek vertical bars, complete with a color-coded mini-map of hidden scored techniques.
+* **Comprehensive Exports:**
+  * **JSON:** Save and share your layer state locally.
+  * **CSV:** Generate spreadsheet-ready reports of all scored and annotated techniques.
+  * **SVG / PNG:** Export high-resolution images of your matrix (automatically expands collapsed columns during export to ensure complete documentation).
 
 ## Local Development
 To run this project locally, ensure you have [Node.js](https://nodejs.org/) installed, then follow these steps:
