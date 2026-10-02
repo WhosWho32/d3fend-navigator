@@ -890,11 +890,11 @@ export default function App() {
         
         <div className="flex items-center gap-3 w-full lg:w-auto shrink-0">
           {searchQuery && (
-            <span className="text-xs text-yellow-400 font-medium whitespace-nowrap hidden lg:inline-block">
+            <span className="text-xs text-yellow-400 font-medium whitespace-nowrap">
               {matchCount} {matchCount === 1 ? 'match' : 'matches'}
             </span>
           )}
-          <div className="relative w-full lg:w-auto">
+          <div className="relative flex-1 lg:w-auto">
             <Search size={14} className="absolute left-2.5 top-2 text-[#768390]" />
             <input 
               type="text" 
