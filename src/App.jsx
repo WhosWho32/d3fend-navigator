@@ -2,7 +2,7 @@ import React, { useState, useRef, useMemo } from 'react';
 import { 
   Download, Upload, Search, X, Plus, Palette, 
   HelpCircle, Image as ImageIcon, FileText,
-  ChevronDown, ChevronRight
+  ChevronDown, ChevronRight, CheckSquare
 } from 'lucide-react';
 import { toSvg, toPng } from 'html-to-image';
 
@@ -531,6 +531,7 @@ export default function App() {
   ]);
   const [activeLayerId, setActiveLayerId] = useState("layer-1");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMultiSelectMode, setIsMultiSelectMode] = useState(false);
   const [contextModalTechId, setContextModalTechId] = useState(null);
   const [isExporting, setIsExporting] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
@@ -603,7 +604,7 @@ export default function App() {
   const handleSelectTechnique = (id, e) => {
     if (e.button !== 0) return;
     const next = new Set(activeLayer.selectedTechs);
-    if (e.ctrlKey || e.metaKey || e.shiftKey) {
+    if (e.ctrlKey || e.metaKey || e.shiftKey || isMultiSelectMode) {
       if (next.has(id)) next.delete(id); else next.add(id);
     } else {
       if (next.has(id) && next.size === 1) next.clear();
@@ -846,7 +847,7 @@ export default function App() {
               <h1 className="text-xl font-bold text-white tracking-tight">
                 MITRE <span className="text-[#388bfd]">D3FEND</span>™ Navigator
               </h1>
-              <span className="bg-[#2d333b] text-[#adbac7] px-1.5 py-0.5 rounded text-[10px] font-mono ml-2 border border-[#444c56]">v1.2.0</span>
+              <span className="bg-[#2d333b] text-[#adbac7] px-1.5 py-0.5 rounded text-[10px] font-mono ml-2 border border-[#444c56]">v1.3.0</span>
             </div>
             <span className="text-[#768390] text-xs mt-0.5 hidden lg:block">A knowledge graph of cybersecurity countermeasures</span>
           </div>
@@ -945,9 +946,23 @@ export default function App() {
         <div className="bg-[#1c2128] border-b border-[#373e47] p-3 px-4 lg:px-6 text-xs flex items-center overflow-x-auto hide-scrollbar">
           
           {activeLayer.activeMenu === 'selection' && (
-            <div className="flex gap-3 min-w-max">
+            <div className="flex gap-3 min-w-max items-center">
               <button onClick={() => updateActiveLayer({ selectedTechs: new Set(allTechniques.map(t => t.id)) })} className="px-2 py-1 bg-[#2d333b] hover:bg-[#373e47] text-white rounded">Select All</button>
               <button onClick={() => updateActiveLayer({ selectedTechs: new Set() })} className="px-2 py-1 bg-[#2d333b] hover:bg-[#373e47] text-white rounded">Deselect All</button>
+              
+              <div className="w-px h-4 bg-[#444c56] mx-1"></div>
+              
+              <button 
+                onClick={() => setIsMultiSelectMode(!isMultiSelectMode)} 
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded transition-colors ${
+                  isMultiSelectMode 
+                    ? 'bg-[#1f6feb] text-white font-medium' 
+                    : 'bg-[#2d333b] text-[#adbac7] hover:bg-[#373e47] hover:text-white'
+                }`}
+              >
+                <CheckSquare size={14} />
+                Multi-Select Mode: {isMultiSelectMode ? 'ON' : 'OFF'}
+              </button>
             </div>
           )}
 
@@ -1162,6 +1177,20 @@ export default function App() {
             
             <div className="p-5 overflow-y-auto text-sm text-[#adbac7] space-y-6">
 
+            {/* --- v1.3.0 --- */}
+              <section>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <h3 className="font-bold text-white text-base">v1.3.0</h3>
+                  <span className="text-xs text-[#768390]">Mobile UX & Selection Update</span>
+                </div>
+                <ul className="list-disc pl-5 space-y-1.5">
+                  <li>Added a "Multi-Select Mode" toggle in the Selection Controls to allow mobile and touch users to select multiple techniques without needing a keyboard.</li>
+                  <li>Improved the bulk selection workflow: users can now use Multi-Select Mode to easily deselect individual techniques from a "Select All" state without accidentally clearing the rest of the board.</li>
+                </ul>
+              </section>
+
+              {/* --- v1.2.0 --- */}
+
             {/* --- v1.2.0 --- */}
               <section>
                 <div className="flex items-baseline gap-2 mb-2">
@@ -1233,6 +1262,7 @@ export default function App() {
                 <ul className="list-disc pl-5 space-y-1">
                   <li><strong>Left-click</strong> any technique in the matrix to select it.</li>
                   <li>Hold <strong>Ctrl</strong> or <strong>Shift</strong> while clicking to select multiple techniques at once.</li>
+                  <li>Toggle <strong>Multi-Select Mode</strong> ON in the <strong>Selection Controls</strong> menu to tap and select multiple techniques without needing a keyboard (perfect for mobile users or deselecting from a "Select All" state).</li>
                   <li>Use the <strong>Selection Controls</strong> menu at the top to quickly Select All or Deselect All.</li>
                 </ul>
               </section>
