@@ -42,6 +42,86 @@ const PREDEFINED_COLORS = [
   '#ffffff', '#cccccc', '#999999', '#666666', '#000000'
 ];
 
+const PREDEFINED_TEMPLATES = {
+  "Ransomware Baseline": {
+    name: "Ransomware Baseline",
+    description: "Comprehensive lifecycle defense against ransomware: from initial access to recovery.",
+    techniques: [
+      // MODEL
+      { id: "D3-SWI", score: 80, color: "#44ff44", comment: "Software Asset Inventory" },
+      { id: "D3-HCI", score: 80, color: "#44ff44", comment: "Hardware Asset Inventory" },
+      { id: "D3-LLM", score: 70, color: "#ffff44", comment: "Logical Link/Network Mapping" },
+      { id: "D3-ODM", score: 90, color: "#44ff44", comment: "Operational Dependency Mapping" },
+      // HARDEN
+      { id: "D3-MFA", score: 100, color: "#44ff44", comment: "Multi-factor Auth (Remote & Admin focus)" },
+      { id: "D3-SPP", score: 100, color: "#44ff44", comment: "Strong Password Policy" },
+      { id: "D3-CRO", score: 85, color: "#44ff44", comment: "Credential Rotation" },
+      { id: "D3-ACH", score: 90, color: "#44ff44", comment: "Application Configuration Hardening (Restrict Scripts/Office)" },
+      { id: "D3-DENCR", score: 100, color: "#44ff44", comment: "Disk Encryption" },
+      // ISOLATE
+      { id: "D3-EAL", score: 75, color: "#ffff44", comment: "Executable Allowlisting" },
+      { id: "D3-EDL", score: 85, color: "#44ff44", comment: "Executable Denylisting" },
+      { id: "D3-KBPI", score: 60, color: "#ff8844", comment: "Kernel-based Process Isolation" },
+      { id: "D3-ITF", score: 95, color: "#44ff44", comment: "Inbound Traffic Filtering" },
+      { id: "D3-OTF", score: 95, color: "#44ff44", comment: "Outbound Traffic Filtering (C2 disruption)" },
+      { id: "D3-DNSAL", score: 80, color: "#44ff44", comment: "DNS Allowlisting" },
+      // DETECT
+      { id: "D3-FIM", score: 90, color: "#44ff44", comment: "File Integrity Monitoring (Mass modification alerts)" },
+      { id: "D3-PSA", score: 70, color: "#ffff44", comment: "Process Spawn Analysis (e.g. Office spawning cmd)" },
+      { id: "D3-SEA", score: 75, color: "#ffff44", comment: "Script Execution Analysis" },
+      { id: "D3-DA", score: 65, color: "#ffff44", comment: "Dynamic File Analysis (Sandboxing payloads)" },
+      // DECEIVE
+      { id: "D3-DF", score: 80, color: "#44ff44", comment: "Decoy/Canary Files (High-signal tripwire)" },
+      { id: "D3-DNR", score: 70, color: "#ffff44", comment: "Decoy Network Shares" },
+      // EVICT
+      { id: "D3-PT", score: 90, color: "#44ff44", comment: "Process Termination" },
+      { id: "D3-AL", score: 95, color: "#44ff44", comment: "Account Locking" },
+      // RESTORE
+      { id: "D3-RF", score: 100, color: "#44ff44", comment: "Restore File (Immutable/Offline Backups)" },
+      { id: "D3-RS", score: 95, color: "#44ff44", comment: "Restore Software" },
+      { id: "D3-RUAA", score: 90, color: "#44ff44", comment: "Restore User Account Access" }
+    ]
+  },
+  "Zero Trust Architecture": {
+    name: "Zero Trust Architecture",
+    description: "Aligns D3FEND techniques to core Zero Trust principles (Identity, Least Privilege, Microsegmentation).",
+    techniques: [
+      // VERIFY EXPLICITLY & LEAST PRIVILEGE
+      { id: "D3-MFA", score: 100, color: "#44ff44", comment: "Verify explicitly (strong identity)" },
+      { id: "D3-CBAN", score: 90, color: "#44ff44", comment: "Verify explicitly (strong identity)" },
+      { id: "D3-OTP", score: 80, color: "#44ff44", comment: "Verify explicitly (strong identity)" },
+      { id: "D3-CRO", score: 85, color: "#44ff44", comment: "Verify explicitly (strong identity)" },
+      { id: "D3-SPP", score: 100, color: "#44ff44", comment: "Verify explicitly (strong identity)" },
+      { id: "D3-UAP", score: 95, color: "#44ff44", comment: "Least privilege" },
+      // DEVICE POSTURE & DYNAMIC POLICY
+      { id: "D3-HCI", score: 90, color: "#44ff44", comment: "Device posture and trust" },
+      { id: "D3-CI", score: 85, color: "#44ff44", comment: "Configuration Inventory (Device posture)" },
+      { id: "D3-AM", score: 80, color: "#ffff44", comment: "Dynamic policy and context" },
+      { id: "D3-ODM", score: 75, color: "#ffff44", comment: "Dynamic policy and context" },
+      // MICROSEGMENTATION & SECURE CHANNELS
+      { id: "D3-NTF", score: 90, color: "#44ff44", comment: "Network Traffic Filtering (Microsegmentation)" },
+      { id: "D3-ITF", score: 95, color: "#44ff44", comment: "Microsegmentation and assume breach" },
+      { id: "D3-OTF", score: 95, color: "#44ff44", comment: "Microsegmentation and assume breach" },
+      { id: "D3-MENCR", score: 100, color: "#44ff44", comment: "Secure, authenticated channels" },
+      { id: "D3-KBPI", score: 70, color: "#ff8844", comment: "Kernel-based Process Isolation" },
+      { id: "D3-EAL", score: 80, color: "#ffff44", comment: "Workload and application containment" },
+      // CONTINUOUS MONITORING
+      { id: "D3-ANET", score: 85, color: "#44ff44", comment: "Authentication Event Thresholding" },
+      { id: "D3-DAM", score: 90, color: "#44ff44", comment: "Continuous monitoring of identity" },
+      { id: "D3-FIM", score: 80, color: "#44ff44", comment: "Continuous monitoring of host" },
+      { id: "D3-PMAD", score: 75, color: "#ffff44", comment: "Continuous monitoring of network" },
+      // TRIPWIRES & AUTOMATED RESPONSE
+      { id: "D3-DUC", score: 85, color: "#ffff44", comment: "Tripwires inside the trusted zone" },
+      { id: "D3-DF", score: 80, color: "#ffff44", comment: "Tripwires inside the trusted zone" },
+      { id: "D3-AL", score: 95, color: "#44ff44", comment: "Automated response to revoked trust" },
+      { id: "D3-ANCI", score: 90, color: "#44ff44", comment: "Authentication Cache Invalidation" },
+      // RESILIENCE
+      { id: "D3-RF", score: 100, color: "#44ff44", comment: "Resilience if trust fails" },
+      { id: "D3-RUAA", score: 95, color: "#44ff44", comment: "Restore User Account Access" }
+    ]
+  }
+};
+
 // --- OFFICIAL D3FEND ONTOLOGY HIERARCHY ---
 const D3FEND_DATA = [
   {
@@ -630,12 +710,12 @@ export default function App() {
         if (Object.keys(rest).length === 0) delete nextData[id];
         else nextData[id] = rest;
       } else {
-        nextData[id] = {
-          ...(nextData[id] || {}),
-          score: clampedScore,
-          color: interpolateColor(clampedScore, activeLayer.gradientConfig.min, activeLayer.gradientConfig.max, activeLayer.gradientConfig.lowColor, activeLayer.gradientConfig.highColor)
-        };
-      }
+          nextData[id] = {
+            ...(nextData[id] || {}),
+            score: clampedScore,
+            color: null 
+          };
+        }
     });
     updateActiveLayer({ techniqueData: nextData });
   };
@@ -787,6 +867,48 @@ export default function App() {
     reader.readAsText(file);
   };
 
+  const loadTemplate = (templateKey) => {
+    if (!templateKey || templateKey === "default") return;
+    
+    const template = PREDEFINED_TEMPLATES[templateKey];
+    if (!template) return;
+
+    const importedData = {};
+    template.techniques.forEach(t => {
+      importedData[t.id] = {
+        score: t.score, 
+        color: null,
+        comment: t.comment || template.description
+      };
+    });
+
+    const newId = `layer-${Date.now()}`;
+    
+    setLayers(prev => {
+      let newName = template.name;
+      // Prevent duplicate names just like the import function
+      if (prev.some(l => l.name.toLowerCase() === newName.toLowerCase())) {
+        let counter = 1;
+        newName = `${template.name} (${counter})`;
+        while (prev.some(l => l.name.toLowerCase() === newName.toLowerCase())) {
+          counter++;
+          newName = `${template.name} (${counter})`;
+        }
+      }
+
+      return [...prev, {
+        id: newId,
+        name: newName,
+        techniqueData: importedData,
+        selectedTechs: new Set(),
+        gradientConfig: { min: 0, max: 100, lowColor: "#ff4444", highColor: "#44ff44" },
+        activeMenu: null
+      }];
+    });
+    
+    setActiveLayerId(newId);
+  };
+
   const renderTechniqueCell = (tech) => {
     const state = activeLayer.techniqueData[tech.id];
     const isSelected = activeLayer.selectedTechs.has(tech.id) && !isExporting;
@@ -795,8 +917,14 @@ export default function App() {
       tech.id.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const bgColor = state?.color || (isSelected ? '#1f6feb' : '#22272e');
-    const textColor = state?.color ? getContrastColor(bgColor) : (isSelected ? '#ffffff' : '#adbac7');
+    // Calculate dynamic color if a score exists but no manual color overrides it
+      let dynamicColor = null;
+      if (state?.score !== undefined && state?.score !== null && state?.score !== "") {
+        dynamicColor = interpolateColor(state.score, activeLayer.gradientConfig.min, activeLayer.gradientConfig.max, activeLayer.gradientConfig.lowColor, activeLayer.gradientConfig.highColor);
+      }
+
+      const bgColor = state?.color || dynamicColor || (isSelected ? '#1f6feb' : '#22272e');
+      const textColor = (state?.color || dynamicColor) ? getContrastColor(bgColor) : (isSelected ? '#ffffff' : '#adbac7');
 
     return (
       <div 
@@ -847,7 +975,7 @@ export default function App() {
               <h1 className="text-xl font-bold text-white tracking-tight">
                 MITRE <span className="text-[#388bfd]">D3FEND</span>™ Navigator
               </h1>
-              <span className="bg-[#2d333b] text-[#adbac7] px-1.5 py-0.5 rounded text-[10px] font-mono ml-2 border border-[#444c56]">v1.3.0</span>
+              <span className="bg-[#2d333b] text-[#adbac7] px-1.5 py-0.5 rounded text-[10px] font-mono ml-2 border border-[#444c56]">v1.4.0</span>
             </div>
             <span className="text-[#768390] text-xs mt-0.5 hidden lg:block">A knowledge graph of cybersecurity countermeasures</span>
           </div>
@@ -882,6 +1010,19 @@ export default function App() {
 
         {/* Right Side: Action Buttons (Locked width) */}
         <div className="flex items-center gap-2 shrink-0 overflow-x-auto hide-scrollbar pb-1 lg:pb-0 pl-0 lg:pl-4">
+        {/* NEW TEMPLATES DROPDOWN */}
+          <select 
+            onChange={(e) => {
+              loadTemplate(e.target.value);
+              e.target.value = "default"; // Reset dropdown after selection
+            }}
+            className="px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm text-white focus:outline-none cursor-pointer"
+          >
+            <option value="default">Templates...</option>
+            {Object.keys(PREDEFINED_TEMPLATES).map(key => (
+              <option key={key} value={key}>{key}</option>
+            ))}
+          </select>
           <button onClick={() => fileInputRef.current.click()} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><Upload size={14} /> Import</button>
           <button onClick={() => exportImage('svg')} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><ImageIcon size={14} /> SVG</button>
           <button onClick={() => exportImage('png')} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><ImageIcon size={14} /> PNG</button>
@@ -1073,7 +1214,21 @@ export default function App() {
             tacticObj.categories.forEach(c => {
               c.techniques.forEach(t => {
                 const state = activeLayer.techniqueData[t.id];
-                if (state && state.color) tacticColors.push(state.color);
+                if (state) {
+                  // Use manual color if it exists, otherwise calculate the dynamic gradient
+                  if (state.color) {
+                    tacticColors.push(state.color);
+                  } else if (state.score !== undefined && state.score !== null && state.score !== "") {
+                    const dynamicColor = interpolateColor(
+                      state.score, 
+                      activeLayer.gradientConfig.min, 
+                      activeLayer.gradientConfig.max, 
+                      activeLayer.gradientConfig.lowColor, 
+                      activeLayer.gradientConfig.highColor
+                    );
+                    if (dynamicColor) tacticColors.push(dynamicColor);
+                  }
+                }
               });
             });
             
@@ -1176,6 +1331,19 @@ export default function App() {
             </div>
             
             <div className="p-5 overflow-y-auto text-sm text-[#adbac7] space-y-6">
+
+              {/* --- v1.4.0 --- */}
+              <section>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <h3 className="font-bold text-white text-base">v1.4.0</h3>
+                  <span className="text-xs text-[#768390]">Templates & Dynamic Rendering</span>
+                </div>
+                <ul className="list-disc pl-5 space-y-1.5">
+                  <li>Added a new "Templates" dropdown featuring pre-built, fully annotated "Ransomware Baseline" and "Zero Trust Architecture" playbooks.</li>
+                  <li>Completely refactored the color engine: adjusting the Low/High gradient settings in the Layer Controls now updates all scored techniques instantly in real-time.</li>
+                  <li>Fixed a bug where the collapsed column mini-map failed to display dynamically calculated gradient colors.</li>
+                </ul>
+              </section>
 
             {/* --- v1.3.0 --- */}
               <section>
