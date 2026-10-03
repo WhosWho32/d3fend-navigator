@@ -7,13 +7,16 @@ A community-driven, client-side web application designed to mirror the utility o
 ## Overview
 The D3FEND Navigator allows security professionals and researchers to dynamically explore, manipulate, and annotate the D3FEND matrix. It provides a visual canvas for mapping defensive countermeasures, scoring techniques, and exporting data for reporting or presentations. The application is entirely client-side, meaning no data is ever sent to a backend server.
 
-<img width="1919" height="911" alt="d3fend-navigator" src="https://github.com/user-attachments/assets/ee0fe1c6-ac5b-45f2-962e-d3eb90452f7c" />
+<img width="1919" height="915" alt="d3fend-navigator" src="https://github.com/user-attachments/assets/c9e748b3-593f-4d70-9088-aabaaa5ec98e" />
+<img width="1919" height="916" alt="d3fend-navigator_2" src="https://github.com/user-attachments/assets/232cfd9a-bc26-4e79-a398-ec25395f95f4" />
+<img width="1919" height="914" alt="d3fend-navigator_3" src="https://github.com/user-attachments/assets/4ed16ea6-12e8-4b57-984c-348c7921ea17" />
 
-<img width="1919" height="403" alt="d3fend-navigator_2" src="https://github.com/user-attachments/assets/7fd57b4b-62bb-405a-b366-c0443f2d985b" />
 
 
 ## Key Features
 * **Interactive Tactical Matrix:** Full support for the D3FEND ontology (Model, Harden, Detect, Isolate, Deceive, Evict, Restore) in a responsive grid.
+* **Pre-built Templates:** Instantly load foundational defense architectures like "Ransomware Baseline" and "Zero Trust Architecture," complete with strategic annotations and pre-configured scores.
+* **Mobile & Touch Optimized:** Fully responsive UI featuring horizontal scrolling for controls, a "Multi-Select Mode" toggle for keyboard-less bulk selection, and native long-press support for context menus.
 * **Multi-Layer Management:** Create and manage multiple defense layers simultaneously using a tabbed interface (e.g., "Current State" vs. "Target State").
 * **Scoring & Annotations:** Score individual techniques (0-100) to automatically apply gradient color coding. Right-click any cell to add custom metadata, comments, and URL references.
 * **Smart Search:** Search by technique ID or name. Matched techniques are highlighted, and even collapsed columns will glow to indicate hidden matches.
