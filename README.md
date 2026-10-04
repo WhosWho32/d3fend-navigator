@@ -1,6 +1,6 @@
 # MITRE D3FEND™ Navigator
 
-![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)
 
 A community-driven, client-side web application designed to mirror the utility of the official ATT&CK Navigator, specifically built for the [MITRE D3FEND™](https://d3fend.mitre.org/) framework. 
 
