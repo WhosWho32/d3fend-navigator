@@ -1484,11 +1484,12 @@ export default function App() {
               </section>
 
               <section>
-                <h3 className="font-semibold text-white mb-1.5">Scoring & Coloring</h3>
+                <h3 className="font-semibold text-white mb-1.5">Scoring & Data Management</h3>
                 <ul className="list-disc pl-5 space-y-1">
                   <li>Open the <strong>Technique Controls</strong> menu to apply a score or a manual background color to your selected techniques.</li>
                   <li>Scores are automatically translated into colors based on the gradient configured in the <strong>Layer Controls</strong> menu.</li>
                   <li>Text color automatically switches between black and white to ensure readability against your chosen background.</li>
+                  <li>Use the <strong>Wipe Data</strong> button to safely and instantly clear all scores, colors, and annotations from your active selection.</li>
                 </ul>
               </section>
 
