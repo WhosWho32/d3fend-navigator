@@ -988,7 +988,7 @@ export default function App() {
               <h1 className="text-xl font-bold text-white tracking-tight">
                 MITRE <span className="text-[#388bfd]">D3FEND</span>™ Navigator
               </h1>
-              <span className="bg-[#2d333b] text-[#adbac7] px-1.5 py-0.5 rounded text-[10px] font-mono ml-2 border border-[#444c56]">v1.4.0</span>
+              <span className="bg-[#2d333b] text-[#adbac7] px-1.5 py-0.5 rounded text-[10px] font-mono ml-2 border border-[#444c56]">v1.5.0</span>
             </div>
             <span className="text-[#768390] text-xs mt-0.5 hidden lg:block">A knowledge graph of cybersecurity countermeasures</span>
           </div>
@@ -1367,6 +1367,18 @@ export default function App() {
             </div>
             
             <div className="p-5 overflow-y-auto text-sm text-[#adbac7] space-y-6">
+
+              {/* --- v1.5.0 --- */}
+              <section>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <h3 className="font-bold text-white text-base">v1.5.0</h3>
+                  <span className="text-xs text-[#768390]">UI Cleanup & Data Management</span>
+                </div>
+                <ul className="list-disc pl-5 space-y-1.5">
+                  <li>Consolidated all export functions (SVG, PNG, CSV, JSON) into a single dropdown menu to save screen space.</li>
+                  <li>Added a "Wipe Data" button to the Technique Controls to instantly clear scores, colors, and annotations for all selected techniques (includes a confirmation safeguard).</li>
+                </ul>
+              </section>
 
               {/* --- v1.4.0 --- */}
               <section>
