@@ -728,6 +728,19 @@ export default function App() {
     updateActiveLayer({ techniqueData: nextData });
   };
 
+  const clearSelectedTechniques = () => {
+    if (activeLayer.selectedTechs.size === 0) return;
+    
+    const confirmMsg = `Are you sure? This will permanently delete all scores, colors, and annotations for the ${activeLayer.selectedTechs.size} selected technique(s).`;
+    if (window.confirm(confirmMsg)) {
+      const nextData = { ...activeLayer.techniqueData };
+      activeLayer.selectedTechs.forEach(id => {
+        delete nextData[id]; // Completely removes the technique's metadata entry
+      });
+      updateActiveLayer({ techniqueData: nextData });
+    }
+  };
+
   const exportJSON = () => {
     const exportData = {
       name: activeLayer.name,
@@ -1024,10 +1037,24 @@ export default function App() {
             ))}
           </select>
           <button onClick={() => fileInputRef.current.click()} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><Upload size={14} /> Import</button>
-          <button onClick={() => exportImage('svg')} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><ImageIcon size={14} /> SVG</button>
-          <button onClick={() => exportImage('png')} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><ImageIcon size={14} /> PNG</button>
-          <button onClick={exportCSV} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap"><Download size={14} /> CSV</button>
-          <button onClick={exportJSON} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#1f6feb] hover:bg-[#388bfd] text-white rounded font-semibold transition-colors text-sm whitespace-nowrap"><Download size={14} /> JSON</button>
+          {/* EXPORT DROPDOWN */}
+          <select 
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === 'svg') exportImage('svg');
+              if (val === 'png') exportImage('png');
+              if (val === 'csv') exportCSV();
+              if (val === 'json') exportJSON();
+              e.target.value = "default"; // Reset dropdown
+            }}
+            className="px-2.5 py-1.5 bg-[#1f6feb] hover:bg-[#388bfd] font-semibold rounded transition-colors text-sm text-white focus:outline-none cursor-pointer"
+          >
+            <option value="default">Export...</option>
+            <option value="json">JSON (Layer File)</option>
+            <option value="csv">CSV (Spreadsheet)</option>
+            <option value="svg">SVG (Vector Image)</option>
+            <option value="png">PNG (Static Image)</option>
+          </select>
           <button onClick={() => setIsChangelogOpen(true)} className="flex items-center gap-1 px-2.5 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#373e47] rounded transition-colors text-sm whitespace-nowrap ml-2"><FileText size={14} /> Changelog</button>
           <button onClick={() => setIsHelpOpen(true)} className="p-1.5 text-[#768390] hover:text-white transition-colors ml-1"><HelpCircle size={18} /></button>
         </div>
@@ -1185,8 +1212,17 @@ export default function App() {
                   ))}
                 </div>
                 <button onClick={() => applyColorToSelected(null)} className="px-2.5 py-1 bg-[#2d333b] text-[#adbac7] rounded text-[11px] border border-[#444c56] ml-2">No Color</button>
+                
+                {/* NEW WIPE DATA BUTTON */}
+                <div className="w-px h-6 bg-[#444c56] mx-2"></div>
+                <button 
+                  onClick={clearSelectedTechniques} 
+                  className="px-3 py-1 bg-red-900/40 hover:bg-red-900/80 text-red-200 hover:text-white transition-colors rounded text-xs font-semibold border border-red-900/50"
+                >
+                  Wipe Data
+                </button>
               </div>
-            </div>
+              </div>
           )}
         </div>
       )}
